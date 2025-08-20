@@ -39,29 +39,19 @@ WORKDIR /tmp
 # --- DokuWiki SMTP Plugin Installation ---
 # Set the working directory to a temporary location for downloading and processing.
 # We create a unique temporary directory to avoid conflicts if /tmp contains other files.
-WORKDIR /tmp/dokuwiki_plugin_install
+WORKDIR /tmp/dokuwiki_plugin_instal
 
-# Download the SMTP plugin.
+# Download the SMTP plugin from the specified URL, unzip it,
+# and move the extracted directory to the DokuWiki plugins directory.
+# The plugin will be installed in /dokuwiki/lib/plugins/smtp.
 RUN set -eux; \
     curl -fL -o smtp.zip ${SMTP_PLUGIN_PATH}; \
-
-# Unzip the plugin into the current temporary directory.
-# This will create the plugin's root folder (e.g., 'dokuwiki-plugin-smtp-2023-01-20')
-# inside '/tmp/dokuwiki_plugin_install/'.
-RUN set -eux; \
     unzip smtp.zip; \
-    # Find the name of the extracted plugin directory.
-    # 'find . -maxdepth 1 -mindepth 1 -type d' looks for directories only one level deep.
-    # '-print -quit' prints the first one found and exits, assuming there's only one.
     EXTRACTED_DIR=$(find . -maxdepth 1 -mindepth 1 -type d -print -quit); \
-    # Move the detected extracted directory to the final 'smtp' location.
-    # This directly renames the extracted folder to 'smtp' under /dokuwiki/lib/plugins/
     mv "${EXTRACTED_DIR}" /dokuwiki/lib/plugins/smtp; \
-    # Clean up the downloaded zip file and the temporary working directory.
     rm smtp.zip; \
-    rm -rf /tmp/dokuwiki_plugin_install # Remove the temporary working directory
+    rm -rf /tmp/dokuwiki_plugin_install
 
-# ... (rest of the Dockerfile remains the same) ...
 
 # --- Permissions for added files and directories ---
 # The official `dokuwiki/dokuwiki` image primarily uses the `www-data` user (UID/GID 33).
