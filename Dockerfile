@@ -39,7 +39,7 @@ WORKDIR /tmp
 # --- DokuWiki SMTP Plugin Installation ---
 # Set the working directory to a temporary location for downloading and processing.
 # We create a unique temporary directory to avoid conflicts if /tmp contains other files.
-WORKDIR /tmp/dokuwiki_plugin_instal
+WORKDIR /tmp/dokuwiki_plugin_install
 
 # Download the SMTP plugin from the specified URL, unzip it,
 # and move the extracted directory to the DokuWiki plugins directory.
@@ -51,7 +51,6 @@ RUN set -eux; \
     mv "${EXTRACTED_DIR}" /dokuwiki/lib/plugins/smtp; \
     rm smtp.zip; \
     rm -rf /tmp/dokuwiki_plugin_install
-
 
 # --- Permissions for added files and directories ---
 # The official `dokuwiki/dokuwiki` image primarily uses the `www-data` user (UID/GID 33).
