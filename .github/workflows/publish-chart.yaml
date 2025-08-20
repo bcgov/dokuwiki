@@ -7,7 +7,7 @@ on:
     paths:
       # Adjust these paths to your actual chart location and workflow file
       - 'helm/**'
-      - '.github/workflows/publish-mediawiki-chart.yaml'
+      - '.github/workflows/publish-chart.yaml'
 
 jobs:
   publish:
@@ -60,9 +60,6 @@ jobs:
           echo "Chart Version: $CHART_VERSION"
           echo "chart_name=$CHART_NAME" >> "$GITHUB_OUTPUT"
           echo "chart_version=$CHART_VERSION" >> "$GITHUB_OUTPUT"
-
-      - name: Add Helm repository
-        run: helm repo add bcgov-crunchy-postgres https://bcgov.github.io/crunchy-postgres/
 
       # Update the chart dependencies
       - name: Update Helm dependencies
