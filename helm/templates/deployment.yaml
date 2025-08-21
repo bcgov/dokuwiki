@@ -27,7 +27,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "dokuwiki.serviceAccountName" . }}
+      # serviceAccountName: {{ include "dokuwiki.serviceAccountName" . }}
       securityContext:
         # {{- /*
         #     Apply the runAsUser and runAsGroup from the Dockerfile.
