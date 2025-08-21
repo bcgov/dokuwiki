@@ -45,14 +45,15 @@ WORKDIR /tmp/dokuwiki_plugin_install
 # and move the extracted directory to the DokuWiki plugins directory.
 # The plugin will be installed in /dokuwiki/lib/plugins/smtp.
 RUN set -eux; \
+    mkdir -p /tmp/dokuwiki_plugin_install; \
+    cd /tmp/dokuwiki_plugin_install; \
     curl -fL -o smtp.zip ${SMTP_PLUGIN_PATH}; \
     unzip smtp.zip; \
-    EXTRACTED_DIR=$(find . -maxdepth 1 -mindepth 1 -type d -print -quit); \
-    if [ -z "$EXTRACTED_DIR" ]; then echo "No directory found after unzip"; exit 1; fi; \
-    mv "$EXTRACTED_DIR" /dokuwiki/lib/plugins/smtp; \
+    mkdir -p /dokuwiki/lib/plugins/smtp; \
+    # Move all contents from the extracted folder(s) into the smtp plugin directory
+    find . -mindepth 2 -type f -exec mv -t /dokuwiki/lib/plugins/smtp {} +; \
     rm smtp.zip; \
     rm -rf /tmp/dokuwiki_plugin_install
-
 
 # --- Permissions for added files and directories ---
 # The official `dokuwiki/dokuwiki` image primarily uses the `www-data` user (UID/GID 33).
