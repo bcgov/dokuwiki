@@ -48,9 +48,11 @@ RUN set -eux; \
     curl -fL -o smtp.zip ${SMTP_PLUGIN_PATH}; \
     unzip smtp.zip; \
     EXTRACTED_DIR=$(find . -maxdepth 1 -mindepth 1 -type d -print -quit); \
-    mv "${EXTRACTED_DIR}" /dokuwiki/lib/plugins/smtp; \
+    if [ -z "$EXTRACTED_DIR" ]; then echo "No directory found after unzip"; exit 1; fi; \
+    mv "$EXTRACTED_DIR" /dokuwiki/lib/plugins/smtp; \
     rm smtp.zip; \
     rm -rf /tmp/dokuwiki_plugin_install
+
 
 # --- Permissions for added files and directories ---
 # The official `dokuwiki/dokuwiki` image primarily uses the `www-data` user (UID/GID 33).
