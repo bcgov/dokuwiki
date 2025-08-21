@@ -51,9 +51,9 @@ RUN set -eux; \
     unzip smtp.zip; \
     mkdir -p /dokuwiki/lib/plugins/smtp; \
     # Move all contents from the extracted folder(s) into the smtp plugin directory
-    cp -r ./splitbrain-dokuwiki-plugin-smtp* /dokuwiki/lib/plugins/smtp \
+    cp -r ./splitbrain-dokuwiki-plugin-smtp* /dokuwiki/lib/plugins/smtp; \
     rm smtp.zip; \
-    rm -rf /tmp/dokuwiki_plugin_install
+    rm -rf /tmp/dokuwiki_plugin_install;
 
 # --- Permissions for added files and directories ---
 # The official `dokuwiki/dokuwiki` image primarily uses the `www-data` user (UID/GID 33).
