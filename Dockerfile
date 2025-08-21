@@ -51,7 +51,7 @@ RUN set -eux; \
     unzip smtp.zip; \
     mkdir -p /dokuwiki/lib/plugins/smtp; \
     # Move all contents from the extracted folder(s) into the smtp plugin directory
-    find . -mindepth 2 -type f -exec mv -t /dokuwiki/lib/plugins/smtp {} +; \
+    cp -r ./splitbrain-dokuwiki-plugin-smtp* /dokuwiki/lib/plugins/smtp \
     rm smtp.zip; \
     rm -rf /tmp/dokuwiki_plugin_install
 
