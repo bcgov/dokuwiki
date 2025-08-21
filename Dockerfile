@@ -19,11 +19,10 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* # Clean up apt cache to keep image small
 
 # --- Apache Port Configuration ---
-# The official DokuWiki image's Apache typically listens on port 80.
-# To align with your Helm charts and previous Dockerfile's EXPOSE 8080,
-# we need to modify Apache's configuration to listen on 8080.
-RUN sed -i 's/^Listen 80/Listen 8080/' /etc/apache2/ports.conf && \
-    sed -i 's/<VirtualHost \*:80>/<VirtualHost \*:8080>/' /etc/apache2/sites-available/000-default.conf
+# Replace ports.conf entirely to ensure Apache listens on port 8080
+RUN echo "Listen 8080" > /etc/apache2/ports.conf && \
+    sed -i 's/<VirtualHost *:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf
+
 
 # --- Healthcheck File ---
 # Based on your previous Dockerfile and Helm probe configurations,
